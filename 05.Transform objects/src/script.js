@@ -1,0 +1,54 @@
+import './style.css'
+import * as THREE from 'three'
+
+// Canvas
+const canvas = document.querySelector('canvas.webgl')
+
+// Scene
+const scene = new THREE.Scene()
+
+/**
+ * Objects
+ */
+const geometry = new THREE.BoxGeometry(1, 1, 1)
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+const mesh = new THREE.Mesh(geometry, material)
+
+mesh.position.set(2, 1, 1)
+mesh.scale.set(2, 0.5, 0.5)
+mesh.rotation.set(Math.PI / 4, Math.PI / 4, 0)
+
+const group = new THREE.Group()
+group.add(mesh)
+scene.add(group)
+/**
+ * Sizes
+ */
+const sizes = {
+    width: 800,
+    height: 600
+}
+
+/**
+ * Camera
+ */
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
+camera.position.z = 3
+camera.lookAt(mesh.position)
+scene.add(camera)
+
+// Vector functions
+// set(x, y, z) - set the position of the vector
+// normalize() - normalize the vector
+// length() - calculate the length of the vector
+// distanceTo() - distance from the specified vector
+const axisHelper = new THREE.AxisHelper()
+scene.add(axisHelper)
+/**
+ * Renderer
+ */
+const renderer = new THREE.WebGLRenderer({
+    canvas: canvas
+})
+renderer.setSize(sizes.width, sizes.height)
+renderer.render(scene, camera)
